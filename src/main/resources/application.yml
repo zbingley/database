@@ -1,0 +1,31 @@
+
+spring:
+  redis:
+    host: 39.105.37.47
+    port: 6379
+    database: 0
+  data:
+    mongodb:
+      database: mydb
+      host: 39.105.37.47
+      port: 27017
+      username: userkk
+      password: userkk
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://39.105.37.47:3306/mydb
+    username: root
+    password: Root!!2018
+  rabbitmq:
+    host: 39.105.37.47
+    port: 5672
+    username: mymq
+    password: 123456
+jwt:
+  enable: false
+  whitelists:
+    - /user/msg
+    - /user
+    - /direct/amsg/**
+server:
+  port: 8081
