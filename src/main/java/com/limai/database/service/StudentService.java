@@ -10,5 +10,7 @@ import com.limai.database.repository.entity.Student;
 public interface StudentService {
     void saveStudent(Student student) throws Exception;
 
+    boolean saveStudentV2(Student student);
+
     void saveV2Student(Student student);
 }

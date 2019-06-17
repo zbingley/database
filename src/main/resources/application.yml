@@ -4,6 +4,7 @@ spring:
     host: 39.105.37.47
     port: 6379
     database: 0
+    password: 123456
   data:
     mongodb:
       database: mydb
@@ -12,7 +13,7 @@ spring:
       username: userkk
       password: userkk
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://39.105.37.47:3306/mydb
     username: root
     password: Root!!2018
@@ -28,4 +29,4 @@ jwt:
     - /user
     - /direct/amsg/**
 server:
-  port: 8081
+  port: 8080

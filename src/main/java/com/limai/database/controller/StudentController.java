@@ -1,5 +1,8 @@
 package com.limai.database.controller;
 
+import com.limai.database.common.BaseResponse;
+import com.limai.database.common.annotation.AutoParamValidate;
+import com.limai.database.common.dto.SubmitStudentRequest;
 import com.limai.database.repository.entity.Student;
 import com.limai.database.service.StudentService;
 import com.limai.database.service.TeacherService;
@@ -33,7 +36,36 @@ public class StudentController {
         }
         return student;
     }
-
+    @AutoParamValidate
+    @PostMapping("/save/v2")
+    public BaseResponse<Boolean> saveStudentV2(@RequestBody SubmitStudentRequest submitStudentRequest){
+        BaseResponse<Boolean> response = new BaseResponse<>();
+        Student student = new Student(submitStudentRequest.getName());
+        boolean saveSuccess = studentService.saveStudentV2(student);
+        if(!saveSuccess){
+            response.setCode(10001);
+            response.setMsg("保存student失败");
+            return response;
+        }
+        response.setDate(saveSuccess);
+        return response;
+    }
+    /*
+    * /teacher/save/v3?name="aa",用实体对象也能接收到URL上的参数
+    * */
+    @PostMapping("/save/v3")
+    public BaseResponse<Boolean> saveStudentV3(SubmitStudentRequest submitStudentRequest){
+        BaseResponse<Boolean> response = new BaseResponse<>();
+        Student student = new Student(submitStudentRequest.getName());
+        boolean saveSuccess = studentService.saveStudentV2(student);
+        if(!saveSuccess){
+            response.setCode(10001);
+            response.setMsg("保存student失败");
+            return response;
+        }
+        response.setDate(saveSuccess);
+        return response;
+    }
     @GetMapping("/saveV2")
     public Student  saveV2Teacher(String name,String teName,String id){
         Student student = new Student(name);
