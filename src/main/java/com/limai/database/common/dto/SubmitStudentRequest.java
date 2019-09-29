@@ -1,5 +1,6 @@
 package com.limai.database.common.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import javax.validation.constraints.Size;

@@ -17,4 +17,5 @@ public interface UserService {
     UserEntity getAndUpdateUserByName(String name,String mobile);
 
     void removeUserById(String userId);
+    void test();
 }

@@ -64,7 +64,7 @@ public class LogAspect implements Ordered {
                 ,method,requestURI,httpMethod,userId,JSONObject.toJSONString(requestParams),jsonObject);
         Object proceedResult = pjp.proceed();
         log.info("{}.response#{}",method, JSON.toJSON(proceedResult));
-        log.info("{}.timecost:{}",method,System.currentTimeMillis()-begin);
+        log.info("{}.timecost:{}ms",method,System.currentTimeMillis()-begin);
         return proceedResult;
     }
     //从HttpServletRequest中获取所有请求参数

@@ -22,12 +22,14 @@ public class UserController {
     public void  addUser(RegisterReq registerReq){
         userService.addUser(registerReq);
     }
-    /*@GetMapping("")
-    public ResponseEntity<UserEntity>  getUser(String mobile){
+    /**
+     @GetMapping("")
+     public ResponseEntity<UserEntity>  getUser(String mobile){
         UserEntity userByMobile = userService.getUserByMobile(mobile);
         HttpStatus status=userByMobile!=null? HttpStatus.OK:HttpStatus.NOT_FOUND;
         return  new ResponseEntity<UserEntity>(userByMobile,status);
-    }*/
+     }
+     */
     @GetMapping("")
     public UserEntity  getUser(String mobile){
         UserEntity userByMobile = userService.getUserByMobile(mobile);
@@ -44,5 +46,10 @@ public class UserController {
     @DeleteMapping(value = "delete")
     public void deleteUserById(String userId){
         userService.removeUserById(userId);
+    }
+
+    @GetMapping("/test1")
+    public void test(){
+        userService.test();
     }
 }

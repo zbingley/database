@@ -25,7 +25,7 @@ public class MyExceptionHandler {
         return new ErrorInfo(4,"User ["+mobile+"] not Found");
     }
 
-    @ExceptionHandler(Exception.class)
+//    @ExceptionHandler(Exception.class)
     public BaseResponse<?> handler(Exception e){
         BaseResponse<Object> response = new BaseResponse<>();
         log.error(e.getMessage());
