@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -24,6 +25,9 @@ import static org.springframework.data.mongodb.core.query.Criteria.where;
 public class UserServiceImpl implements UserService {
     @Autowired
     private MongoOperations mongo;
+
+    @Autowired(required = false)
+    private RestTemplate restTemplate;
     @Override
     public void addUser(RegisterReq registerReq) {
         String userId = new ObjectId().toString();
@@ -54,6 +58,11 @@ public class UserServiceImpl implements UserService {
         Query query = new Query(where("userId").is(userObjectId));
         DeleteResult remove = mongo.remove(query, UserEntity.class);
         System.out.println(" DeleteResult:"+remove);
+    }
+
+    @Override
+    public void test() {
+        restTemplate.getForObject("127.0.0.1/8081/test",String.class);
     }
 
     private UserEntity userReq2UserEntity(RegisterReq registerReq,String userId){

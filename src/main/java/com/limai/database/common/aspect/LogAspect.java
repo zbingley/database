@@ -8,6 +8,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -23,7 +24,7 @@ import java.util.Enumeration;
 @Slf4j
 @Aspect
 @Component
-public class LogAspect {
+public class LogAspect implements Ordered {
     //定义切点:
     //可以用使用 && ||逻辑运算符
     @Pointcut("execution(public * com.limai.database..*.controller.*.*(..)) || execution(public * com.limai.database.controller.*.*(..))")
@@ -63,7 +64,7 @@ public class LogAspect {
                 ,method,requestURI,httpMethod,userId,JSONObject.toJSONString(requestParams),jsonObject);
         Object proceedResult = pjp.proceed();
         log.info("{}.response#{}",method, JSON.toJSON(proceedResult));
-        log.info("{}.timecost:{}",method,System.currentTimeMillis()-begin);
+        log.info("{}.timecost:{}ms",method,System.currentTimeMillis()-begin);
         return proceedResult;
     }
     //从HttpServletRequest中获取所有请求参数
@@ -76,5 +77,10 @@ public class LogAspect {
             params.put(paramName, paramValue);
         }
         return params;
+    }
+
+    @Override
+    public int getOrder() {
+        return 1;
     }
 }

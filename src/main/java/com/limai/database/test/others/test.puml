@@ -1,0 +1,70 @@
+@startuml
+participant "联联充电" as llcd
+participant "定制evcs" as msp #orange
+participant "星充evcs" as xc
+autonumber
+==用户充电流程==
+
+llcd->msp:请求设备认证
+activate llcd
+activate msp
+activate xc
+msp->xc:请求设备认证
+xc->xc: 权限校验&设备检查
+activate xc
+deactivate xc
+xc-->msp:ack
+msp-->llcd:ack
+deactivate msp
+deactivate llcd
+||40||    /' 有时候我们感觉，上下文信息太过密集，可以使用 ||| 来增加空间，或者 ||size|| 指定空间大小'/
+... ~与中电联流程相同~ ...
+xc->>msp:推送设备充电中状态（星充定制化 version=starcharge）
+msp->llcd:推送设备充电中状态（可包含VIN码）
+
+activate msp
+xc->>msp:推送充电订单信息（星充定制化 version=starcharge）
+msp->>llcd:出租车VIN码校验
+llcd-->msp:ack
+msp->>msp:当taxFlag=1时
+activate msp
+deactivate msp
+msp->>llcd:推送充电订单信息（可包含VIN码）
+deactivate msp
+==补贴结算流程==
+
+llcd-->msp:推送订单结算信息
+activate llcd
+activate msp
+msp->msp:更新结算信息如本地库
+activate msp
+deactivate msp
+msp->llcd:ack
+deactivate msp
+deactivate llcd
+
+loop 定时3点执行漏单弥补检查
+    msp->>msp:查询表
+    activate msp
+    deactivate msp
+    loop
+        msp->>llcd:查询订单结算信息
+        activate llcd
+        activate msp
+        msp->>msp:更新数据
+        activate msp
+        deactivate msp
+        llcd-->msp:ack
+        deactivate llcd
+        deactivate msp
+    end
+end
+==补贴申请（暂定为线下申请，不出接口）==
+msp->>llcd:发起补贴申请
+activate llcd
+llcd->>llcd:补贴申请审核
+activate llcd
+deactivate llcd
+llcd->msp:查询订单结算信息
+deactivate llcd
+@enduml

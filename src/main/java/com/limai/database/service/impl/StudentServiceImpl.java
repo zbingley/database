@@ -29,6 +29,12 @@ public class StudentServiceImpl  implements StudentService {
 //        throw new SQLException("抛出一个异常");
     }
 
+    @Override
+    public boolean saveStudentV2(Student student) {
+        Student save = studentRepository.save(student);
+        return  save!=null;
+    }
+
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void saveV2Student(Student student) {

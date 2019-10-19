@@ -4,6 +4,7 @@ spring:
     host: 39.105.37.47
     port: 6379
     database: 0
+    password: 123456
   data:
     mongodb:
       database: mydb
@@ -11,16 +12,23 @@ spring:
       port: 27017
       username: userkk
       password: userkk
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://39.105.37.47:3306/mydb
+#    url: jdbc:mysql://127.0.0.1:3306/mydb
+#    username: root
+#    password: 123456
+    url: jdbc:mysql://39.105.37.47:3306/mydb?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&failOverReadOnly=false&useSSL=false
     username: root
     password: Root!!2018
+
   rabbitmq:
     host: 39.105.37.47
     port: 5672
     username: mymq
     password: 123456
+
 jwt:
   enable: false
   whitelists:
@@ -28,4 +36,4 @@ jwt:
     - /user
     - /direct/amsg/**
 server:
-  port: 8081
+  port: 8080

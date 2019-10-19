@@ -3,6 +3,8 @@ package com.limai.database;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
@@ -13,6 +15,7 @@ import javax.sql.DataSource;
  * @Desc:
  */
 @Component
+@Lazy
 public class DataSourceShow implements ApplicationContextAware {
     ApplicationContext applicationContext=null;
     @Override

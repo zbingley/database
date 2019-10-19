@@ -1,0 +1,80 @@
+@startuml
+autonumber
+hide footbox
+
+participant "联联充电" as llcd  order 1
+participant "定制evcs" as msp  order 2 #orange
+participant "星充evcs" as evcs  order 3
+
+== 用户充电流程 ==
+
+llcd->msp:请求设备认证
+activate llcd
+activate msp
+msp->evcs:请求设备认证
+activate evcs
+evcs->evcs:权限校验&状态检查
+activate evcs
+deactivate evcs
+evcs-->msp:ack
+deactivate evcs
+msp-->llcd:ack
+deactivate msp
+deactivate llcd
+
+... ~与中电联流程相同~ ...
+
+evcs->msp:推送设备充电中状态（星充定制化，version=starcharge）
+msp-[#blue]>llcd:推送设备充电中状态（可包含VIN码）
+
+... ~与中电联流程相同~ ...
+evcs->msp:推送充电订单信息（星充定制化，version=starcharge）
+activate msp
+msp->llcd:出租车VIN码校验【check_taxi_vin】
+llcd-->msp:ack（是否为补贴出租车Vin、TaxiFlag）
+msp->msp:当TaxiFlag=1时，存入t_taxi_settlement表（confirm_status=1）
+activate msp
+deactivate msp
+msp-[#blue]>llcd:推送充电订单信息（可包含VIN码）
+deactivate msp
+
+== 补贴结算流程（订单小结中VIN不为空） ==
+
+llcd->msp:推送订单结算信息【notification_order_settlement_info】
+activate llcd
+activate msp
+msp->msp:更新结算信息入本地库t_taxi_settement表（confirm_status=2，补上其他补贴数据）\n【如果本地没有此订单则todo步骤9】
+activate msp
+deactivate msp
+msp-->llcd:ack（ConfirmResult 0:成功1:争议交易2～99:自定义）
+deactivate msp
+deactivate llcd
+
+loop 定时3点执行漏单弥补检查
+	msp->msp:查询表t_taxi_settlement前一天confirm_status=1的数据
+	activate msp
+  deactivate msp
+	loop 遍历结算单
+		msp->llcd:查询订单结算信息【query_order_settlement_info】
+		activate msp
+		activate llcd
+		msp->msp:更新数据，同步骤14
+		activate msp
+		deactivate msp
+		llcd-->msp:ack
+		deactivate llcd
+    deactivate msp
+	end
+end
+
+
+== 补贴申请（暂定为线下申请,不出接口） ==
+msp->llcd:发起补贴申请
+activate llcd
+llcd->llcd:补贴申请审核
+activate llcd
+deactivate llcd
+llcd-->msp:查询订单结算信息【query_order_settlement_info】
+deactivate llcd
+
+@enduml
