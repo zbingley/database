@@ -23,7 +23,7 @@ public class PersonController {
     private PersonService personService;
     @Autowired
     private AsyncService asyncService;
-    private StringRedisTemplate stringRedisTemplate;
+
     @PostMapping("/save")
     public BaseResponse<PersonEntity> save(@RequestBody PersonSaveReq personSaveReq,HttpServletRequest request) throws IOException {
         log.info("person:{}",personSaveReq);
@@ -32,7 +32,7 @@ public class PersonController {
         System.out.println("----------------");*/
         PersonEntity save = personService.save(personSaveReq);
         BaseResponse<PersonEntity> response = new BaseResponse<>();
-        response.setDate(save);
+        response.setData(save);
 //        asyncService.asyncExecuteService();
         return response;
     }
@@ -42,7 +42,7 @@ public class PersonController {
         Integer idReq = Integer.valueOf(id);
         PersonEntity byId = personService.getById(idReq);
         BaseResponse<PersonEntity> response = new BaseResponse<>();
-        response.setDate(byId);
+        response.setData(byId);
         return response;
     }
 
@@ -51,7 +51,7 @@ public class PersonController {
         log.info("person:{}",personSaveReq);
         PersonEntity save = personService.update(personSaveReq);
         BaseResponse<PersonEntity> response = new BaseResponse<>();
-        response.setDate(save);
+        response.setData(save);
         return response;
     }
     @PostMapping("/update/v2")
@@ -59,7 +59,7 @@ public class PersonController {
         log.info("person:{}",personSaveReq);
         int i = personService.updateV2(personSaveReq);
         BaseResponse<Integer> response = new BaseResponse<>();
-        response.setDate(i);
+        response.setData(i);
         return response;
     }
     /*

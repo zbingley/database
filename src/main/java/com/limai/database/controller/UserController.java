@@ -52,4 +52,9 @@ public class UserController {
     public void test(){
         userService.test();
     }
+    @GetMapping("/thread")
+    public String  testThread(){
+        System.out.println("enter......");
+        return "test thread";
+    }
 }

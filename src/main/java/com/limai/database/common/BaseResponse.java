@@ -11,7 +11,7 @@ import lombok.Data;
 public class BaseResponse<T> {
     private Integer code;
     private String msg;
-    private T date;
+    private T data;
 
     public BaseResponse() {
         this.code=0;
@@ -21,6 +21,6 @@ public class BaseResponse<T> {
     public BaseResponse(Integer code, String msg) {
         this.code = code;
         this.msg = msg;
-        this.date = null;
+        this.data = null;
     }
 }

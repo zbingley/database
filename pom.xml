@@ -5,7 +5,7 @@
 
     <groupId>com.limai</groupId>
     <artifactId>database</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
 
     <name>database</name>
@@ -22,6 +22,9 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
+        <docker.image.prefix>registry.cn-hangzhou.aliyuncs.com/zhangbin_space</docker.image.prefix>
+        <maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
+        <maven.build.version>${version}-${maven.build.timestamp}</maven.build.version>
     </properties>
 
     <dependencies>
@@ -97,6 +100,12 @@
             <version>1.7.25</version>
             <scope>compile</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.1</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -105,6 +114,26 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+
+            <plugin>
+            <groupId>com.spotify</groupId>
+            <artifactId>docker-maven-plugin</artifactId>
+            <version>0.4.11</version>
+            <configuration>
+                <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
+                <imageTags>
+                    <imageTag>${maven.build.version}</imageTag>
+                </imageTags>
+                <dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
+                <resources>
+                    <resource>
+                        <targetPath>/</targetPath>
+                        <directory>${project.build.directory}</directory>
+                        <include>${project.build.finalName}.${maven.build.timestamp}.jar</include>
+                    </resource>
+                </resources>
+            </configuration>
+        </plugin>
         </plugins>
     </build>
 

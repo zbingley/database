@@ -47,7 +47,7 @@ public class StudentController {
             response.setMsg("保存student失败");
             return response;
         }
-        response.setDate(saveSuccess);
+        response.setData(saveSuccess);
         return response;
     }
     /*
@@ -63,7 +63,7 @@ public class StudentController {
             response.setMsg("保存student失败");
             return response;
         }
-        response.setDate(saveSuccess);
+        response.setData(saveSuccess);
         return response;
     }
     @GetMapping("/saveV2")
