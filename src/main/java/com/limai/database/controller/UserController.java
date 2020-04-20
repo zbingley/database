@@ -14,47 +14,58 @@ import org.springframework.web.bind.annotation.*;
  * @Desc:
  */
 @RestController
-@RequestMapping(value = "/users",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+@RequestMapping(value = "/users", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 public class UserController {
     @Autowired
     private UserService userService;
+
     @PostMapping("/register")
-    public void  addUser(RegisterReq registerReq){
+    public void addUser(RegisterReq registerReq) {
         userService.addUser(registerReq);
     }
+
     /**
-     @GetMapping("")
-     public ResponseEntity<UserEntity>  getUser(String mobile){
-        UserEntity userByMobile = userService.getUserByMobile(mobile);
-        HttpStatus status=userByMobile!=null? HttpStatus.OK:HttpStatus.NOT_FOUND;
-        return  new ResponseEntity<UserEntity>(userByMobile,status);
-     }
+     * @GetMapping("") public ResponseEntity<UserEntity>  getUser(String mobile){
+     * UserEntity userByMobile = userService.getUserByMobile(mobile);
+     * HttpStatus status=userByMobile!=null? HttpStatus.OK:HttpStatus.NOT_FOUND;
+     * return  new ResponseEntity<UserEntity>(userByMobile,status);
+     * }
      */
     @GetMapping("")
-    public UserEntity  getUser(String mobile){
+    public UserEntity getUser(String mobile) {
         UserEntity userByMobile = userService.getUserByMobile(mobile);
-        if(null==userByMobile){
-           throw  new UserNotFoundException(mobile);
+        if (null == userByMobile) {
+            throw new UserNotFoundException(mobile);
         }
-        return  userByMobile;
+        return userByMobile;
     }
+
     @GetMapping(value = "update")
-    public UserEntity updateByName(String name,String mobile){
-        UserEntity andUpdateUserByName = userService.getAndUpdateUserByName(name,mobile);
+    public UserEntity updateByName(String name, String mobile) {
+        UserEntity andUpdateUserByName = userService.getAndUpdateUserByName(name, mobile);
         return andUpdateUserByName;
     }
+
     @DeleteMapping(value = "delete")
-    public void deleteUserById(String userId){
+    public void deleteUserById(String userId) {
         userService.removeUserById(userId);
     }
 
     @GetMapping("/test1")
-    public void test(){
+    public void test() {
         userService.test();
     }
+
     @GetMapping("/thread")
-    public String  testThread(){
+    public String testThread() {
         System.out.println("enter......");
         return "test thread";
+    }
+
+    @PostMapping("/save")
+    public UserEntity saveUser(RegisterReq registerReq) {
+        userService.addUser(registerReq);
+        UserEntity userByMobile = userService.getUserByMobile(registerReq.getMobile());
+        return userByMobile;
     }
 }

@@ -3,12 +3,13 @@ package com.limai.database.test.others;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 public class TimeStampExample {
     public static void main(String[] args) {
-        DateTimeFormatter da = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+     /*   DateTimeFormatter da = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
         System.out.println(LocalDateTime.now().format(da));
 
 
@@ -16,6 +17,11 @@ public class TimeStampExample {
         map.put("a",1);
         map.put("b",null);
         map.computeIfAbsent("a",key->4);
-        System.out.println(map);
+        System.out.println(map);*/
+
+
+            String  s="a";
+            String b = s+String.join("", Collections.nCopies(3, "b"));
+            System.out.println(b);
     }
 }

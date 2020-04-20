@@ -106,6 +106,36 @@
             <artifactId>httpclient</artifactId>
             <version>4.5.1</version>
         </dependency>
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.4</version>
+        </dependency>
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+            <version>4.0.36.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk15on</artifactId>
+            <version>1.55</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka-clients</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.ning</groupId>
+            <artifactId>async-http-client</artifactId>
+            <version>1.9.40</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -120,11 +150,13 @@
             <artifactId>docker-maven-plugin</artifactId>
             <version>0.4.11</version>
             <configuration>
-                <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
-                <imageTags>
-                    <imageTag>${maven.build.version}</imageTag>
-                </imageTags>
+                <imageName>${project.artifactId}:${project.version}</imageName>
+                <baseImage>java</baseImage>
+                <entryPoint>["java", "-jar", "/${project.build.finalName}.jar"]</entryPoint>
+                <!--是否跳过docker build-->
+                <skipDockerBuild>true</skipDockerBuild>
                 <dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
+                <dockerHost>tcp://39.105.37.47:2375</dockerHost>
                 <resources>
                     <resource>
                         <targetPath>/</targetPath>

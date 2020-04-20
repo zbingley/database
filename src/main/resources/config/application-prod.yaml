@@ -16,9 +16,6 @@ spring:
     database-platform: org.hibernate.dialect.MySQLDialect
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://127.0.0.1:3306/mydb
-#    username: root
-#    password: 123456
     url: jdbc:mysql://39.105.37.47:3306/mydb?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&failOverReadOnly=false&useSSL=false
     username: root
     password: Root!!2018
@@ -29,11 +26,19 @@ spring:
     username: mymq
     password: 123456
 
+#  kafka:
+#    bootstrap-servers: 39.105.37.47:9092
+#    consumer:
+#      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+#      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+#      group-id: my_test
+#    producer:
+#      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+#      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
 jwt:
   enable: false
   whitelists:
     - /user/msg
     - /user
     - /direct/amsg/**
-server:
-  port: 8080

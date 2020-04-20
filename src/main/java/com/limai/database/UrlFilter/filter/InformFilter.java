@@ -23,7 +23,7 @@ import java.io.PrintWriter;
  * @Date: 2019/6/16 11:27
  * @Desc:
  */
-@Component
+//@Component
 @Slf4j
 public class InformFilter extends OncePerRequestFilter {
     @Autowired

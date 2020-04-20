@@ -1,0 +1,75 @@
+@startuml
+participant "第三方csp" as csp
+participant "evcs" as evcs  #orange
+participant "活动" as hd
+autonumber
+==方案一：==
+
+hd ->> hd: 发布活动
+activate hd
+
+hd -> evcs: kafka(活动消息)
+deactivate hd
+activate evcs
+evcs->>evcs:根据是否推送开关和权限判断
+activate evcs
+
+alt 开关关闭或无权限
+deactivate evcs
+
+else  开关打开且有权限
+evcs->csp:notification_discount_stations(活动站点)
+deactivate evcs
+
+activate csp
+csp->evcs:query_stations_discount
+
+activate evcs
+evcs->hd:根据桩群id和appkey获取<color red>最优折扣信息
+activate hd
+hd-->evcs: ack（同步返回）
+deactivate hd
+
+evcs-->csp:ack（同步返回）
+deactivate evcs
+deactivate csp
+end
+
+==方案二：==
+hd ->> hd: 发布活动
+activate hd
+
+hd -> evcs: kafka(活动消息)
+deactivate hd
+activate evcs
+evcs->>evcs:根据是否推送开关和权限判断
+
+activate evcs
+'deactivate evcs
+
+
+alt 开关关闭或无权限
+deactivate evcs
+
+else  开关打开且有权限
+evcs->csp:notification_discount_stations(活动站点)
+deactivate evcs
+activate csp
+csp->evcs:query_stations_discount
+
+activate evcs
+evcs->hd:根据桩群id和appkey获取<color red>全部折扣信息
+activate hd
+hd-->evcs: ack（同步返回）
+deactivate hd
+
+evcs-->csp:ack（同步返回）
+deactivate evcs
+
+csp->>csp:计算最优折扣
+activate csp
+deactivate csp
+deactivate csp
+
+end
+@endumlhd

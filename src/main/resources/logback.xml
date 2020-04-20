@@ -1,25 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="false" scanPeriod="60000" debug="false">
 
-<!--    <property name-="appName" value="database"/>
-    <property name-="logPath" value="./logs"/>-->
+    <property name="appName" value="database"/>
+    <property name="logPath" value="./logs"/>
+    <property name="logFormat" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger %L - %msg%n"/>
 
-    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <!--<layout  class="ch.qos.logback.classic.PatternLayout">-->
-            <!--<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>-->
+        <!--<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>-->
         <!--</layout>-->
         <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger %L - %msg%n</pattern>
+            <pattern>${logFormat}</pattern>
+            <charset>UTF-8</charset>
         </encoder>
     </appender>
-   <!-- <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-        <File>${logPath}/${appName}.log</File>
-        <append>true</append>
+
+    <appender name="logError" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${logPath}/${appName}.error.log</File>
+        <Append>true</Append>
         <encoder>
-            <pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+            <pattern>${logFormat}</pattern>
+            <charset>UTF-8</charset>
         </encoder>
-    </appender>-->
-    <appender name="ROLLING-FILE-1" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <fileNamePattern>${logPath}/${appName}.error.%i.log</fileNamePattern>
+            <minIndex>1</minIndex>
+            <maxIndex>10</maxIndex>
+        </rollingPolicy>
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <MaxFileSize>1MB</MaxFileSize>
+        </triggeringPolicy>
+    </appender>
+
+    <appender name="logInfo" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${logPath}/${appName}.info.log</File>
+        <Append>true</Append>
+        <encoder>
+            <pattern>${logFormat}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <fileNamePattern>${logPath}/${appName}.info.%i.log</fileNamePattern>
+            <minIndex>1</minIndex>
+            <maxIndex>10</maxIndex>
+        </rollingPolicy>
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <MaxFileSize>1MB</MaxFileSize>
+        </triggeringPolicy>
+    </appender>
+
+    <!-- <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+         <File>${logPath}/${appName}.log</File>
+         <append>true</append>
+         <encoder>
+             <pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+         </encoder>
+     </appender>-->
+    <!--appender name="ROLLING-FILE-1" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <File>./logs/database.log</File>
         <append>true</append>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
@@ -29,27 +66,39 @@
         <encoder>
             <pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
         </encoder>
-    </appender>
+    </appender>-->
 
     <!-- 异步输出 -->
-    <appender name ="ASYNC" class= "ch.qos.logback.classic.AsyncAppender">
+    <appender name="ASYNC" class="ch.qos.logback.classic.AsyncAppender">
         <!-- 不丢失日志.默认的,如果队列的80%已满,则会丢弃TRACT、DEBUG、INFO级别的日志 -->
         <discardingThreshold>0</discardingThreshold>
         <!-- 更改默认的队列的深度,该值会影响性能.默认值为256 -->
         <queueSize>256</queueSize>
         <!-- 添加附加的appender,最多只能添加一个 -->
-        <appender-ref ref ="ROLLING-FILE-1"/>
+        <appender-ref ref="logInfo"/>
     </appender>
 
     <!--<logger name="java" additivity="false"/>-->
 
-    <logger name="java.lang" level="warn">
-        <appender-ref ref="ASYNC"/>
-    </logger>
+    <springProfile name="test">
+        <logger name="java.lang" level="error">
+            <appender-ref ref="ASYNC"/>
+        </logger>
 
+        <root level="info">
+            <appender-ref ref="logInfo"/>
+            <appender-ref ref="console"/>
+        </root>
+    </springProfile>
 
-    <root level="info">
-        <appender-ref ref="ROLLING-FILE-1"/>
-        <appender-ref ref="STDOUT"/>
-    </root>
+    <springProfile name="prod">
+        <logger name="java.lang" level="warn">
+            <appender-ref ref="ASYNC"/>
+        </logger>
+
+        <root level="info">
+            <appender-ref ref="logInfo"/>
+            <appender-ref ref="console"/>
+        </root>
+    </springProfile>
 </configuration>

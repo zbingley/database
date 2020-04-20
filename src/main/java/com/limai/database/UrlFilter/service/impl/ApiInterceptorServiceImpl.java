@@ -22,8 +22,13 @@ import java.util.List;
 @Service
 public class ApiInterceptorServiceImpl implements ApiInterceptorService {
 
+    private final ApiInterceptorRepository apiInterceptorRepository;
+
     @Autowired
-    private ApiInterceptorRepository apiInterceptorRepository;
+    public ApiInterceptorServiceImpl(ApiInterceptorRepository apiInterceptorRepository) {
+        this.apiInterceptorRepository = apiInterceptorRepository;
+    }
+
     @Override
     public ApiInterceptorEntity checkInterruptedUrl(String url) {
         try {
