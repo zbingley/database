@@ -22,7 +22,7 @@ public class NingService {
     /**
      * 构造方式一
      */
-    private static AsyncHttpClient client;
+    public static AsyncHttpClient client;
 
     static {
         AsyncHttpClientConfig.Builder builder = new AsyncHttpClientConfig.Builder();

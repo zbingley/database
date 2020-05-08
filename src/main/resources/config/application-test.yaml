@@ -1,17 +1,13 @@
-
 spring:
   redis:
     host: 39.105.37.47
     port: 6379
     database: 0
-    password: 123456
+    password: redis@zhangbin
   data:
     mongodb:
-      database: mydb
-      host: 39.105.37.47
-      port: 27017
-      username: userkk
-      password: userkk
+      # 格式mongodb://用户名:密码@39.105.37.47:27016/数据库
+      uri: mongodb://zhangbin:123456@39.105.37.47:27016/mydb
   jpa:
     database-platform: org.hibernate.dialect.MySQLDialect
   datasource:

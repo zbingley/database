@@ -1,12 +1,18 @@
 package com.limai.database.controller;
 
 import com.limai.database.common.handler.exception.UserNotFoundException;
+import com.limai.database.dto.LoginUser;
 import com.limai.database.dto.RegisterReq;
 import com.limai.database.repository.entity.UserEntity;
 import com.limai.database.service.UserService;
+import com.limai.database.service.WxService;
+import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * @Author: zhangbin
@@ -19,9 +25,24 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private WxService wxService;
+
     @PostMapping("/register")
     public void addUser(RegisterReq registerReq) {
         userService.addUser(registerReq);
+    }
+
+    @PostMapping("login")
+    public Map login(@RequestBody LoginUser loginUser) {
+        if (Objects.isNull(loginUser)) {
+            throw new ServiceException("registerReq 不能为空");
+        }
+        userService.getUserByMobile(loginUser.getMobile());
+        Map userInfo = wxService.getUserInfo(loginUser.getCode());
+        String openid = (String) userInfo.get("openid");
+        userService.updateUserByMobile(openid, loginUser.getMobile());
+        return userInfo;
     }
 
     /**

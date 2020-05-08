@@ -3,3 +3,7 @@ spring:
     active: test
 server:
   port: 8080
+wx:
+  appId: wxdebceac9ab183e36
+  appSecret: 03d492fef557545eebd16ea283313edb
+  url: https://api.weixin.qq.com/

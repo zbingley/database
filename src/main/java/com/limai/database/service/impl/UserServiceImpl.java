@@ -53,6 +53,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserEntity updateUserByMobile(String openid, String mobile) {
+        Query query = new Query(where("mobile").is(mobile));
+        Update update = new Update();
+        update.set("openid",openid);
+        UserEntity userEntity = mongo.findAndModify(query, update, UserEntity.class);
+        return userEntity;
+    }
+
+    @Override
     public void removeUserById(String userId) {
         ObjectId userObjectId = new ObjectId(userId);
         Query query = new Query(where("userId").is(userObjectId));

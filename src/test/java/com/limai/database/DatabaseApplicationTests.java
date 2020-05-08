@@ -16,8 +16,8 @@ public class DatabaseApplicationTests {
 
     @Test
     public void contextLoads() {
-        redisTemplate.opsForValue().set("string_key","hello world");
-        redisTemplate.opsForList().leftPush("list_key","value1");
+        redisTemplate.opsForValue().set("string_key1","hello world1");
+        redisTemplate.opsForList().leftPush("list_key1","value11");
     }
 
 }

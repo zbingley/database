@@ -2,7 +2,7 @@
 spring:
   redis:
     host: 39.105.37.47
-    port: 6379
+    port: 6378
     database: 0
     password: 123456
   data:
@@ -18,7 +18,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://39.105.37.47:3306/mydb?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&failOverReadOnly=false&useSSL=false
     username: root
-    password: Root!!2018
+    password: 123456
 
   rabbitmq:
     host: 39.105.37.47

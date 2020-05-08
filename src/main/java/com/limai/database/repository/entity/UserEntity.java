@@ -20,6 +20,7 @@ public class UserEntity {
     private ObjectId userId;
     private String name;
     private String mobile;
+    private String openid;
     private List<LinkmanEntity> linkmans=new ArrayList<>();
 
 }
