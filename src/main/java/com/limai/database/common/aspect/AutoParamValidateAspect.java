@@ -26,22 +26,22 @@ import java.util.Set;
 @Component
 @Aspect
 public class AutoParamValidateAspect implements Ordered {
-    private Validator validator=Validation.buildDefaultValidatorFactory().getValidator();
+    private Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
     @Pointcut(value = "execution(public * com.limai.database.controller.*.*(..)) ||execution(public * com.limai.database..*.controller.*.*(..))")
-    public void autoParamValidatePointcut(){
+    public void autoParamValidatePointcut() {
     }
 
-    @Around(value = "autoParamValidatePointcut() && @annotation(autoParamValidate)" )
+    @Around(value = "autoParamValidatePointcut() && @annotation(autoParamValidate)")
     public Object autoParamValidateAround(ProceedingJoinPoint pjp, AutoParamValidate autoParamValidate) throws Throwable {
         MethodSignature methodSignature = (MethodSignature) pjp.getSignature();
 //        String methodName = methodSignature.getName();
         Parameter[] parameters = methodSignature.getMethod().getParameters();
         Object[] args = pjp.getArgs();
-        for(int i=0;i<parameters.length;i++) {
-            if(parameters[i].isAnnotationPresent(RequestBody.class)){
+        for (int i = 0; i < parameters.length; i++) {
+            if (parameters[i].isAnnotationPresent(RequestBody.class)) {
                 BaseResponse<?> response = validate(methodSignature, args[i]);
-                if(response!=null){
+                if (response != null) {
                     return response;
                 }
             }
@@ -49,17 +49,17 @@ public class AutoParamValidateAspect implements Ordered {
         return pjp.proceed();
     }
 
-    private BaseResponse<?> validate(MethodSignature methodSignature,Object arg) throws Exception {
-        BaseResponse<?> response =null;
+    private BaseResponse<?> validate(MethodSignature methodSignature, Object arg) throws Exception {
+        BaseResponse<?> response = null;
         Set<ConstraintViolation<Object>> constraintViolationSet = validator.validate(arg);
         // 若不为空，则有参数不合法，返回错误信息
-        if(!constraintViolationSet.isEmpty()){
+        if (!constraintViolationSet.isEmpty()) {
             ConstraintViolation<Object> first = constraintViolationSet.iterator().next();
-            if(BaseResponse.class.isAssignableFrom(methodSignature.getReturnType())){
-                 response = (BaseResponse) methodSignature.getReturnType().newInstance();
-                 response.setCode(98);
-                 response.setMsg(first.getMessage());
-            }else {
+            if (BaseResponse.class.isAssignableFrom(methodSignature.getReturnType())) {
+                response = (BaseResponse) methodSignature.getReturnType().newInstance();
+                response.setCode(98);
+                response.setMsg(first.getMessage());
+            } else {
                 throw new RuntimeException("被AutoParamValidate修饰的方法返回值必须为BaseResponse");
             }
         }

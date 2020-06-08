@@ -1,7 +1,7 @@
 spring:
   redis:
     host: 39.105.37.47
-    port: 6379
+    port: 6378
     database: 0
     password: redis@zhangbin
   data:

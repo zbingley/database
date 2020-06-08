@@ -1,8 +1,17 @@
 spring:
   profiles:
-    active: test
+    active: prod
+#  mvc:
+#    配置静态资源的访问路径，按下面修改后访问路径由http://localhost:8080/test.jpg变为http://localhost:8080/resource/test.jpg
+#    static-path-pattern: /resource/**
 server:
   port: 8080
+  ssl:
+    enabled: true
+    key-store: classpath:server.p12
+    key-store-type: PKCS12
+    key-store-password: 123456
+
 wx:
   appId: wxdebceac9ab183e36
   appSecret: 03d492fef557545eebd16ea283313edb
