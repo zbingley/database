@@ -9,7 +9,7 @@ spring:
     mongodb:
       database: mydb
       host: 39.105.37.47
-      port: 27017
+      port: 27016
       username: userkk
       password: userkk
   jpa:
