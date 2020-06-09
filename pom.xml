@@ -25,6 +25,10 @@
         <docker.image.prefix>registry.cn-hangzhou.aliyuncs.com/zhangbin_space</docker.image.prefix>
         <maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
         <maven.build.version>${version}</maven.build.version>
+        <!--# 镜像仓库地址#【customized定制化项目、starcharge星充产品】 -->
+        <docker.image.prefix>registry.cn-beijing.aliyuncs.com/zhangbin_space</docker.image.prefix>
+        <maven.build.version>${version}-${maven.build.timestamp}</maven.build.version>
+        <start.class>com.limai.database.DatabaseApplication</start.class>
     </properties>
 
     <dependencies>
@@ -165,19 +169,22 @@
             <groupId>com.spotify</groupId>
             <artifactId>docker-maven-plugin</artifactId>
             <version>0.4.11</version>
+
             <configuration>
-                <imageName>${project.artifactId}:${project.version}</imageName>
-                <baseImage>java</baseImage>
-                <entryPoint>["java", "-jar", "/${project.build.finalName}.jar"]</entryPoint>
-                <!--是否跳过docker build-->
-                <skipDockerBuild>true</skipDockerBuild>
+                <imageName>${docker.image.prefix}/${name}</imageName>
+                <imageTags>
+                    <imageTag>${maven.build.version}</imageTag>
+                </imageTags>
+
+                <!-- 指定Dockerfile所在的路径 -->
                 <dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
+
                 <dockerHost>tcp://39.105.37.47:2375</dockerHost>
                 <resources>
                     <resource>
                         <targetPath>/</targetPath>
                         <directory>${project.build.directory}</directory>
-                        <include>${project.build.finalName}.jar</include>
+                        <include>${project.artifactId}.${maven.build.timestamp}.jar</include>
                     </resource>
                 </resources>
             </configuration>
