@@ -179,7 +179,7 @@
                 <!-- 指定Dockerfile所在的路径 -->
                 <dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
 
-                <dockerHost>tcp://39.105.37.47:2375</dockerHost>
+                <dockerHost>http://39.105.37.47:2375</dockerHost>
                 <resources>
                     <resource>
                         <targetPath>/</targetPath>
