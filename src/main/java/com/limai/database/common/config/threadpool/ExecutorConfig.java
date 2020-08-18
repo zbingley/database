@@ -17,10 +17,10 @@ public class ExecutorConfig {
     @Bean("asyncServiceExecutor")
     public Executor asyncServiceExecutor(){
         logger.info("start asyncServiceExecutor");
-//        ThreadPoolTaskExecutor threadPoolTaskExecutor = new ThreadPoolTaskExecutor();
-        VisibleThreadPoolTaskExecutor threadPoolTaskExecutor = new VisibleThreadPoolTaskExecutor();
-        threadPoolTaskExecutor.setCorePoolSize(5);
-        threadPoolTaskExecutor.setMaxPoolSize(10);
+        ThreadPoolTaskExecutor threadPoolTaskExecutor = new ThreadPoolTaskExecutor();
+//        VisibleThreadPoolTaskExecutor threadPoolTaskExecutor = new VisibleThreadPoolTaskExecutor();
+        threadPoolTaskExecutor.setCorePoolSize(10);
+        threadPoolTaskExecutor.setMaxPoolSize(20);
         threadPoolTaskExecutor.setKeepAliveSeconds(100);
         threadPoolTaskExecutor.setQueueCapacity(101000);
         threadPoolTaskExecutor.setThreadNamePrefix("async-service-");

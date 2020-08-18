@@ -46,10 +46,16 @@ public class StringDemo {
     @Test
     public void hashDemo(){
         Map<Object, Object> map = redisTemplate.opsForHash().entries("hash:str");
-        redisTemplate.opsForHash().put("hash:str","key3","value");
+        redisTemplate.opsForHash().put("hash:str2","key3","value");
+        Map<String, Object> hashValue = new HashMap<>();
+        hashValue.put("k1","v1");
+        hashValue.put("k2","v2");
+        redisTemplate.boundHashOps("hash:str2").putAll(hashValue);
+        List<Object> keys = Arrays.asList("k1", "k2", "key3");
+        List<Object> objects = redisTemplate.boundHashOps("hash:str2").multiGet(keys);
 //        Object key = redisTemplate.opsForHash().get("hash:str", "key");
 //        System.out.println(key);
-        redisTemplate.expire("string_key1",20,TimeUnit.SECONDS);
+        redisTemplate.expire("string_key3",20,TimeUnit.SECONDS);
         BoundValueOperations<String, String> string = redisTemplate.boundValueOps("string");
 
         redisTemplate.execute(new SessionCallback() {

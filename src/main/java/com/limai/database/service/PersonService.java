@@ -5,6 +5,8 @@ import com.limai.database.repository.entity.PersonEntity;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
+
 public interface PersonService {
     PersonEntity save(PersonSaveReq personSaveReq);
 
@@ -13,4 +15,6 @@ public interface PersonService {
     PersonEntity update(PersonSaveReq personSaveReq);
 
     int updateV2(PersonSaveReq personSaveReq);
+
+    List<PersonEntity> list(String dateTime);
 }

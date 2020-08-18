@@ -26,6 +26,7 @@ public class NingService {
 
     static {
         AsyncHttpClientConfig.Builder builder = new AsyncHttpClientConfig.Builder();
+        builder.setMaxConnections(2);
         builder.setConnectTimeout(1500);//与服务端建立连接超时时间，需要考虑网络不稳定的情况
         builder.setReadTimeout(2000);
         builder.setRequestTimeout(2000);//服务端响应结果超时时间

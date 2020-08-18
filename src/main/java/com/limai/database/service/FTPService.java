@@ -1,14 +1,14 @@
 package com.limai.database.service;
 
-import jdk.nashorn.internal.objects.annotations.Constructor;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
+import org.apache.commons.net.ftp.FTPSClient;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.io.*;
-import java.net.SocketException;
 
 /**
  * @author Zhang bin
@@ -17,10 +17,18 @@ import java.net.SocketException;
 @Service
 public class FTPService {
 
-    private static String host = "39.105.37.47";
-    private static String user = "zhangbin";
-    private static String password = "123456";
-    private static String directory = "/home/vsftpd/zhangbin";
+    @Value("${ftp.host}")
+    private  String host ;
+
+    @Value("${ftp.user}")
+    private  String user ;
+
+    @Value("${ftp.password}")
+    private  String password ;
+
+    @Value("${ftp.directory}")
+    private  String directory ;
+
     private static String saveFile = "G:\\saveftp";
 
     private FTPClient ftpClient;
@@ -28,11 +36,12 @@ public class FTPService {
     /**
      * 获取FTPCLIENT
      */
-    @PostConstruct
+//    @PostConstruct
     public void getFtpClient() {
         try {
-            FTPClient ftp = new FTPClient();
+//            FTPClient ftp = new FTPClient();
             // 连接
+            FTPSClient ftp = new FTPSClient("SSL",true);
             ftp.connect(host);// 连接FTP服务器
             ftp.login(user, password);// 登陆FTP服务器
             //验证FTP服务器是否登录成功
@@ -42,8 +51,8 @@ public class FTPService {
             }
             ftp.setControlEncoding("UTF-8"); // 中文支持
             ftp.setFileType(FTPClient.BINARY_FILE_TYPE);
-//		ftp.enterLocalPassiveMode();  // 被动模式
-            ftp.enterLocalActiveMode();  // 主动模式
+		ftp.enterLocalPassiveMode();  // 被动模式
+//            ftp.enterLocalActiveMode();  // 主动模式
             ftp.changeWorkingDirectory(directory);
             this.ftpClient = ftp;
         } catch (IOException e) {
@@ -93,6 +102,7 @@ public class FTPService {
         try {
             File file = new File("G:\\llcd1.png");
             is = new FileInputStream(file);
+            ftpClient.makeDirectory("/test");
             ftpClient.changeWorkingDirectory(directory);
             ftpClient.setRemoteVerificationEnabled(false);
             ftpClient.setBufferSize(1024);

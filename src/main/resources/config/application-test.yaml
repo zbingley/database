@@ -1,7 +1,7 @@
 spring:
   redis:
     host: 39.105.37.47
-    port: 6378
+    port: 6377
     database: 0
     password: redis@zhangbin
   data:
@@ -15,24 +15,36 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/mydb?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&failOverReadOnly=false&useSSL=false&serverTimezone=UTC
     username: root
     password: 123456
+    type: com.alibaba.druid.pool.DruidDataSource
+    platform: mysql
+    druid:
+      min-idle: 5
+      max-active: 20
+      max-wait: 60000
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      validation-query: SELECT1FROMDUAL
+      query-timeout: 10
+      test-while-idle: true
+      test-on-borrow: true
+      test-on-return: true
+      filter:
+        stat:
+          log-slow-sql: true
 
 
-  rabbitmq:
-    host: 39.105.37.47
-    port: 5672
-    username: mymq
-    password: 123456
+#  rabbitmq:
+#    host: 39.105.37.47
+#    port: 5672
+#    username: mymq
+#    password: 123456
 
-#  kafka:
-#    bootstrap-servers: 39.105.37.47:9092
-#    consumer:
-#      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-#      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-#      group-id: my_test
-#    producer:
-#      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-#      value-serializer: org.apache.kafka.common.serialization.StringSerializer
 
+ftp:
+  host: 10.8.8.8
+  user: ocpp
+  password: 123456
+  directory: /test/
 jwt:
   enable: false
   whitelists:

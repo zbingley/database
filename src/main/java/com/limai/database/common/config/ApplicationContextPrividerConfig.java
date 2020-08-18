@@ -5,6 +5,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
+import java.lang.annotation.Annotation;
+import java.util.Map;
+
 /**
  * @Author: zhangbin
  * @Date: 2019/6/6 8:40
@@ -12,13 +15,17 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class ApplicationContextPrividerConfig implements ApplicationContextAware {
-    private static ApplicationContext applicationContext;
+    private static ApplicationContext context;
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        this.applicationContext=applicationContext;
+        context=applicationContext;
     }
 
     public static <T>T getBean(String className,Class<T> aClass){
-        return applicationContext.getBean(className,aClass);
+        return context.getBean(className,aClass);
+    }
+
+    public Map<String, Object> getBeanByAnnotation(Class<? extends  Annotation> clazz){
+        return context.getBeansWithAnnotation(clazz);
     }
 }

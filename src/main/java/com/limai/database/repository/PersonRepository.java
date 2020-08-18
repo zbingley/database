@@ -8,6 +8,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
+import java.util.List;
+
 public interface PersonRepository extends JpaRepository<PersonEntity,Integer> {
     @Modifying
     @Transactional
@@ -16,4 +19,6 @@ public interface PersonRepository extends JpaRepository<PersonEntity,Integer> {
             "p.gender=:#{#personSaveReq.gender} " +
             "where p.id=:#{#personSaveReq.id}")
     int updateV2(@Param("personSaveReq") PersonSaveReq personSaveReq);
+
+    List<PersonEntity> findAllByGmtCreateAfter(Timestamp gmtCreate);
 }

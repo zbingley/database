@@ -1,6 +1,15 @@
 spring:
   profiles:
     active: prod
+  kafka:
+    bootstrap-servers: 39.105.37.47:9092
+    consumer:
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      group-id: my_test
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
 #  mvc:
 #    配置静态资源的访问路径，按下面修改后访问路径由http://localhost:8080/test.jpg变为http://localhost:8080/resource/test.jpg
 #    static-path-pattern: /resource/**
@@ -11,6 +20,13 @@ server:
     key-store: classpath:server.p12
     key-store-type: PKCS12
     key-store-password: 123456
+
+#动态修改日志级别配置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: 'loggers'
 
 wx:
   appId: wxdebceac9ab183e36

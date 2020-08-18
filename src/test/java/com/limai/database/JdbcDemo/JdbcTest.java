@@ -1,5 +1,6 @@
 package com.limai.database.JdbcDemo;
 
+import com.limai.database.common.util.ChineseNameUtils;
 import com.limai.database.repository.entity.PersonEntity;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,6 +28,15 @@ public class JdbcTest {
 
         List<PersonEntity> people = jdbcTemplate.query("select * from person ", new BeanPropertyRowMapper<>(PersonEntity.class));
         System.out.println(people);
+    }
+
+    @Test
+    public void testGenerateChineseName(){
+        for (int i = 0; i < 10; i++) {
+            String name = ChineseNameUtils.randomChineseName();
+            System.out.println(name);
+        }
+
     }
 
 }

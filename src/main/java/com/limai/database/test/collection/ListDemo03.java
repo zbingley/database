@@ -1,6 +1,7 @@
 package com.limai.database.test.collection;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ListDemo03 {
@@ -12,6 +13,10 @@ public class ListDemo03 {
         list.add(4);
         list.add(5);
         list.add(6);
+
+        //获取线程安全的list
+        List<Integer> list1 = Collections.synchronizedList(list);
+
         int size = list.size();
         for (int i=0;i<size;i++){
            list.remove(0);

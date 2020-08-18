@@ -11,16 +11,16 @@ import org.springframework.web.bind.annotation.RestController;
  * @version [版本号, 2020/3/13 15:16]
  */
 @RestController
-//@RequestMapping("kafka")
-//@Slf4j
+@RequestMapping("kafka")
+@Slf4j
 public class KafkaController {
 
-//    @Autowired
-//    private KafkaProducer kafkaProducer;
-//    @RequestMapping("/test")
-//    public void test(){
-//        log.info("kafka testing .....");
-//        kafkaProducer.send();
-//    }
+    @Autowired
+    private KafkaProducer kafkaProducer;
+    @RequestMapping("/send")
+    public void test(){
+        log.info("kafka testing .....");
+        kafkaProducer.send();
+    }
 
 }
