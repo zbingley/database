@@ -23,4 +23,10 @@ public class KafkaController {
         kafkaProducer.send();
     }
 
+    @RequestMapping("/send2")
+    public void test2(){
+        log.info("kafka testing ..2...");
+        kafkaProducer.send2();
+    }
+
 }

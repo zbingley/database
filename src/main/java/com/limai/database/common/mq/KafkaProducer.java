@@ -27,7 +27,19 @@ public class KafkaProducer {
             JSONObject message = new JSONObject();
             message.put("NO",i);
             message.put("Date",new Date());
-            kafkaTemplate.send("test",message.toJSONString());
+            kafkaTemplate.send("test1",message.toJSONString());
+        }
+
+    }
+    public void send2() {
+
+        log.info(".......sending.2....");
+
+        for (int i = 0; i < 5; i++) {
+            JSONObject message = new JSONObject();
+            message.put("NO2",i);
+            message.put("Date2",new Date());
+            kafkaTemplate.send("my-replicated-topic",message.toJSONString());
         }
 
     }

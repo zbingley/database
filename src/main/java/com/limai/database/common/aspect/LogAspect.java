@@ -26,7 +26,7 @@ import java.util.Enumeration;
 @Component
 public class LogAspect implements Ordered {
     //定义切点:
-    //可以用使用 && ||逻辑运算符
+    //可以用使用 && ||逻辑运算F符
     @Pointcut("execution(public * com.limai.database..*.controller.*.*(..)) || execution(public * com.limai.database.controller.*.*(..))")
     public void logPointCut() {
     }

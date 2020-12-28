@@ -39,15 +39,15 @@ spring:
 #    username: mymq
 #    password: 123456
 
-#  kafka:
-#    bootstrap-servers: 39.105.37.47:9092
-#    consumer:
-#      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-#      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-#      group-id: my_test
-#    producer:
-#      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-#      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+  kafka:
+    bootstrap-servers: 39.105.37.47:9092
+    consumer:
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      group-id: my_test
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
 
 ftp:
   host: 39.105.37.47

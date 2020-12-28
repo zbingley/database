@@ -22,7 +22,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
-        <!--# 镜像仓库地址#【customized定制化项目、starcharge星充产品】 -->
         <docker.image.prefix>registry.cn-beijing.aliyuncs.com/zhangbin_space</docker.image.prefix>
         <maven.build.version>${version}-${maven.build.timestamp}</maven.build.version>
         <start.class>com.limai.database.DatabaseApplication</start.class>
@@ -44,10 +43,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-amqp</artifactId>
         </dependency>
         <dependency>
             <groupId>mysql</groupId>
@@ -171,6 +166,24 @@
             <artifactId>junit-jupiter-api</artifactId>
             <version>RELEASE</version>
             <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-dependencies</artifactId>
+            <version>Finchley.SR1</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+
+        <!-- feign & okHttp依赖-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-okhttp</artifactId>
         </dependency>
 
     </dependencies>

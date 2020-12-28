@@ -16,6 +16,8 @@ public class BigDecimalTest {
         System.out.println(num2.add(new BigDecimal("100")));  // 100.05000000000000000277555756156289135105907917022705078125
         System.out.println(BigDecimal.valueOf(2.3));// 2.3
 
+        System.out.println("::;;"+BigDecimal.valueOf(0.05).add(new BigDecimal("100")));
+
         System.out.println("=============================================");
         BigDecimal a = new BigDecimal("4.5");
         BigDecimal b = new BigDecimal("1.5");
